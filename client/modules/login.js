@@ -1,12 +1,12 @@
-let login = ( options ) => {
-  _validate( options.form, options.template );
+let login = (options) => {
+  _validate(options.form, options.template);
 };
 
-let _validate = ( form, template ) => {
-  $( form ).validate( validation( template ) );
+let _validate = (form, template) => {
+  $(form).validate(validation(template));
 };
 
-let validation = ( template ) => {
+let validation = (template) => {
   return {
     rules: {
       emailAddress: {
@@ -26,20 +26,36 @@ let validation = ( template ) => {
         required: 'Need a password here.'
       }
     },
-    submitHandler() { _handleLogin( template ); }
+    submitHandler() {
+      _handleLogin(template);
+    }
   };
 };
 
-let _handleLogin = ( template ) => {
-  let email    = template.find( '[name="emailAddress"]' ).value,
-      password = template.find( '[name="password"]' ).value;
+let _handleLogin = (template) => {
+  let email = template.find('[name="emailAddress"]').value,
+    password = template.find('[name="password"]').value,
+    formData = {
+      user_info: email,
+      hash_password: calcSHA1(password)
+    };
 
-  Meteor.loginWithPassword( email, password, ( error ) => {
-    if ( error ) {
-      Bert.alert( error.reason, 'warning' );
+  Session.set('loggingIn', true);
+
+  requestApi('sign_in', formData, function (error, response) {
+    var result = response.data;
+    if (result.status == 'ERROR') {
+      Bert.alert(result.msg, 'warning');
     } else {
-      Bert.alert( 'Logged in!', 'success' );
+      util.setCookie('leporu_token', result.token_id, 3);
+      Session.set('currentUser', JSON.stringify({
+        full_name: result.full_name,
+        photo: result.photo,
+        type: result.type
+      }));
+      Bert.alert('Logged in!', 'success');
     }
+    Session.set('loggingIn', false);
   });
 };
 

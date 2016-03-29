@@ -1,7 +1,10 @@
 {
   "public": {
     "key": "value",
-    "STRIPE_URL": "https://js.stripe.com/v2/",
+    "COOKIES_NAME": "leporu_token",
+    "API_URL": "https://api-dev.ibooknail.com",
+    "API_STATIC_URL": "https://api-img-dev.ibooknail.com",
+    "STRIPE_URL": "https://js.stripe.com/v2",
     "STRIPE_PUBLISHABLE_KEY": "pk_test_vRZZsakXsPtkZ6FkL8Erq2TY"
   },
   "private": {

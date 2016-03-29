@@ -8,10 +8,12 @@ const handleRedirect = ( routes, redirect ) => {
 
 Template.default.helpers({
 	loggingIn() {
-		return Meteor.loggingIn();
+		//return Meteor.loggingIn();
+    return Session.get('loggingIn');
 	},
 	authenticated() {
-		return !Meteor.loggingIn() && Meteor.user();
+		//return !Meteor.loggingIn() && Meteor.user();
+    return util.getCookie('leporu_token') ? true : false;
 	},
 	redirectAuthenticated() {
 	 	return handleRedirect([
