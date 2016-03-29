@@ -1,8 +1,11 @@
 {
   "public": {
-    "key": "value"
+    "key": "value",
+    "STRIPE_URL": "https://js.stripe.com/v2/",
+    "STRIPE_PUBLISHABLE_KEY": "pk_test_vRZZsakXsPtkZ6FkL8Erq2TY"
   },
   "private": {
-    "MAIL_URL": ""
+    "MAIL_URL": "",
+    "STRIPE_PRIVATE_KEY": ""
   }
 }
