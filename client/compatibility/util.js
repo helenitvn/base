@@ -17,3 +17,7 @@ util.getCookie = function (cname) {
   }
   return "";
 }
+
+util.deleteCookie = function (cname) {
+  util.setCookie(cname, "", -1);
+}

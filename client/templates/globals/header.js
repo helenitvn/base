@@ -22,10 +22,13 @@ Template.header.helpers({
 
 Template.header.events({
   'click .logout' () {
-    Meteor.logout((error) => {
-      if (error) {
-        Bert.alert(error.reason, 'warning');
+    requestApi('sign_out', {}, function (error, response) {
+      var result = response.data;
+      if (result.status == 'ERROR') {
+        Bert.alert(result.msg, 'warning');
       } else {
+        util.deleteCookie('leporu_token');
+        Session.set('currentUser', null);
         Bert.alert('Logged out!', 'success');
       }
     });
